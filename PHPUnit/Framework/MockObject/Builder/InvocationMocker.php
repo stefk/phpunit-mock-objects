@@ -115,6 +115,28 @@ class PHPUnit_Framework_MockObject_Builder_InvocationMocker implements PHPUnit_F
     }
 
     /**
+     * @return PHPUnit_Framework_MockObject_Builder_InvocationMocker
+     */
+    public function willReturn()
+    {
+        $args = func_get_args();
+        $argCount = count($args);
+
+        if ($argCount === 0) {
+            $args[0] = null;
+        }
+
+        if ($argCount === 1) {
+            $this->matcher->stub = new PHPUnit_Framework_MockObject_Stub_Return($args[0]);
+        } else {
+            $this->matcher->stub = new PHPUnit_Framework_MockObject_Stub_ConsecutiveCalls($args);
+        }
+
+        return $this;
+    }
+
+
+    /**
      * @param  mixed $id
      * @return PHPUnit_Framework_MockObject_Builder_InvocationMocker
      */
