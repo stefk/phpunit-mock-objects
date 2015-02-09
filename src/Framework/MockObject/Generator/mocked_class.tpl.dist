@@ -4,8 +4,16 @@
     private $__phpunit_originalObject;
 
 {clone}{mocked_methods}
-    public function expects(PHPUnit_Framework_MockObject_Matcher_Invocation $matcher)
+    public function expects($matcher = null)
     {
+        if (is_null($matcher)) {
+            $matcher = new PHPUnit_Framework_MockObject_Matcher_InvokedAtLeastOnce;
+        } elseif (is_int($matcher)) {
+            $matcher = new PHPUnit_Framework_MockObject_Matcher_InvokedCount($matcher);
+        } elseif (!$matcher instanceof PHPUnit_Framework_MockObject_Matcher_Invocation) {
+            throw new InvalidArgumentException();
+        }
+
         return $this->__phpunit_getInvocationMocker()->expects($matcher);
     }
 {method}

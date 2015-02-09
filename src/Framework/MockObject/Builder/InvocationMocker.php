@@ -81,14 +81,20 @@ class PHPUnit_Framework_MockObject_Builder_InvocationMocker implements PHPUnit_F
     }
 
     /**
-     * @param  mixed                                                 $value
      * @return PHPUnit_Framework_MockObject_Builder_InvocationMocker
      */
-    public function willReturn($value)
+    public function willReturn()
     {
-        $stub = new PHPUnit_Framework_MockObject_Stub_Return(
-          $value
-        );
+        $args = func_get_args();
+        $argCount = count($args);
+
+        if ($argCount === 0) {
+            $stub = new PHPUnit_Framework_MockObject_Stub_Return(null);
+        } elseif ($argCount === 1) {
+            $stub = new PHPUnit_Framework_MockObject_Stub_Return($args[0]);
+        } else {
+            $stub = new PHPUnit_Framework_MockObject_Stub_ConsecutiveCalls($args);
+        }
 
         return $this->will($stub);
     }

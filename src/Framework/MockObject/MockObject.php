@@ -26,10 +26,10 @@ interface PHPUnit_Framework_MockObject_MockObject /*extends PHPUnit_Framework_Mo
      * Registers a new expectation in the mock object and returns the match
      * object which can be infused with further details.
      *
-     * @param  PHPUnit_Framework_MockObject_Matcher_Invocation       $matcher
+     * @param  mixed     $matcher
      * @return PHPUnit_Framework_MockObject_Builder_InvocationMocker
      */
-    public function expects(PHPUnit_Framework_MockObject_Matcher_Invocation $matcher);
+    public function expects($matcher = null);
 
     /**
      * @return PHPUnit_Framework_MockObject_InvocationMocker
