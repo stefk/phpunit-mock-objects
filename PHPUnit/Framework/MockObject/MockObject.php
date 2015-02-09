@@ -63,7 +63,7 @@ interface PHPUnit_Framework_MockObject_MockObject /*extends PHPUnit_Framework_Mo
      * @param  PHPUnit_Framework_MockObject_Matcher_Invocation $matcher
      * @return PHPUnit_Framework_MockObject_Builder_InvocationMocker
      */
-    public function expects(PHPUnit_Framework_MockObject_Matcher_Invocation $matcher);
+    public function expects($matcher = null);
 
     /**
      * Registers a new static expectation in the mock object and returns the

@@ -4,13 +4,17 @@
     private $__phpunit_invocationMocker;
 
 {clone}{mocked_methods}
-    public function expects(PHPUnit_Framework_MockObject_Matcher_Invocation $matcher)
+    public function expects($matcher = null)
     {
+        $matcher = self::__phpunit_resolveMatcher($matcher);
+
         return $this->__phpunit_getInvocationMocker()->expects($matcher);
     }
 
     public static function staticExpects(PHPUnit_Framework_MockObject_Matcher_Invocation $matcher)
     {
+        $matcher = self::__phpunit_resolveMatcher($matcher);
+
         return self::__phpunit_getStaticInvocationMocker()->expects($matcher);
     }
 
@@ -48,5 +52,18 @@
     {
         self::$__phpunit_staticInvocationMocker = NULL;
         $this->__phpunit_invocationMocker       = NULL;
+    }
+
+    private static function __phpunit_resolveMatcher($matcher)
+    {
+        if (is_null($matcher)) {
+            $matcher = new PHPUnit_Framework_MockObject_Matcher_InvokedAtLeastOnce;
+        } elseif (is_int($matcher)) {
+            $matcher = new PHPUnit_Framework_MockObject_Matcher_InvokedCount($matcher);
+        } elseif (!$matcher instanceof PHPUnit_Framework_MockObject_Matcher_Invocation) {
+            throw new InvalidArgumentException();
+        }
+
+        return $matcher;
     }
 }{epilogue}
